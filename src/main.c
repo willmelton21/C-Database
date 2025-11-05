@@ -22,6 +22,7 @@ int main(int argc, char *argv[]) {
   int db_fd = 1;
   int db_status = 0;
   struct dbheader_t *dbhdr = NULL;
+  struct employee_t *employee = NULL;
   char* filepath = NULL;
   char* newEmployee = NULL; 
   bool newFile = false;
@@ -81,7 +82,7 @@ int main(int argc, char *argv[]) {
 
 
 
-   output_file(db_fd,dbhdr);
+   output_file(db_fd,dbhdr,&employee);
 
   return 0;
 	
