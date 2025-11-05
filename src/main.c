@@ -19,9 +19,12 @@ void print_usage(char *argv[]) {
 int main(int argc, char *argv[]) { 
 
   char c;
+  int db_fd = 1;
+  int db_status = 0;
+  struct dbheader_t *dbhdr = NULL;
   char* filepath = NULL;
   char* newEmployee = NULL; 
-  bool newFile = true;
+  bool newFile = false;
   while ((c = getopt(argc, argv, "nf:a:")) != -1){
     switch (c){
       case 'n':
@@ -50,6 +53,36 @@ int main(int argc, char *argv[]) {
   printf("Newfile: %d\n",newFile);
   printf("New Employee: %s\n",newEmployee);
   printf("filepath %s\n", filepath);
+
+  if (newFile) {
+     db_fd = create_db_file(filepath);
+      if (db_fd == STATUS_ERROR) {
+         printf("DB File couldn't be created \n");
+         return -1;
+      }
+      db_status = create_db_header(db_fd, &dbhdr);
+      if (db_status == STATUS_ERROR) {
+         printf("Error creating DB header\n");
+         return -1;
+      }
+  }
+  else {
+      db_fd = open_db_file(filepath);
+      if (db_fd == STATUS_ERROR) {
+         printf("DB File couldn't be opened \n");
+         return -1;
+      }
+
+      if (validate_db_header(db_fd, &dbhdr) == STATUS_ERROR) {
+         printf("failed to validate databadse header\n");
+         return -1;
+      }
+   }
+
+
+
+   output_file(db_fd,dbhdr);
+
   return 0;
 	
 }
