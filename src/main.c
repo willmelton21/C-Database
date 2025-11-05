@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
          printf("DB File couldn't be created \n");
          return -1;
       }
-      db_status = create_db_header(db_fd, &dbhdr);
+      db_status = create_db_header(&dbhdr);
       if (db_status == STATUS_ERROR) {
          printf("Error creating DB header\n");
          return -1;
