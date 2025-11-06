@@ -12,6 +12,10 @@
 #include "parse.h"
 
 void list_employees(struct dbheader_t *dbhdr, struct employee_t *employees) {
+
+   if (employees == NULL || dbhdr == NULL) {
+      return;
+   }
    
    for(int i = 0; i < dbhdr->count; i++) {
 
