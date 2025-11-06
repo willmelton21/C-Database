@@ -26,14 +26,18 @@ int main(int argc, char *argv[]) {
   struct employee_t* employees = NULL;
   char* filepath = NULL;
   char* newEmployee = NULL; 
+  bool list = false; 
   bool newFile = false;
-  while ((c = getopt(argc, argv, "nf:a:")) != -1){
+  while ((c = getopt(argc, argv, "nf:a:l")) != -1){
     switch (c){
       case 'n':
         newFile = true;
         break;
       case 'f':
         filepath = optarg;
+        break;
+      case 'l':
+        list = true;
         break;
       case 'a':
         newEmployee = optarg;
@@ -91,6 +95,10 @@ int main(int argc, char *argv[]) {
 
    if (newEmployee) {
       add_employee(dbhdr,&employees,newEmployee);
+   }
+
+   if (list){
+      list_employees(dbhdr,employees);
    }
 
    output_file(db_fd,dbhdr,employees);
