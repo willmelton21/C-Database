@@ -16,7 +16,7 @@
 //}
 
 
-int add_employees(struct dbheader_t *dbhdr, struct employee_t **employees, char *addstring) {
+int add_employee(struct dbheader_t *dbhdr, struct employee_t **employees, char *addstring) {
 
    if (dbhdr == NULL) {
       return STATUS_ERROR;

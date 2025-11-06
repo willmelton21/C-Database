@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
    }
 
    if (newEmployee) {
-      add_employees(dbhdr,&employees,newEmployee);
+      add_employee(dbhdr,&employees,newEmployee);
    }
 
    output_file(db_fd,dbhdr,employees);
