@@ -12,7 +12,8 @@ void print_usage(char *argv[]) {
   printf("Usage:\n %s -n -f <database file> -a <new Employee>\n",argv[0]);
   printf("\t -n - Create a new Database file\n");
   printf("\t -f - (required) List a filepath for database file\n");
-  printf("\t -a - Creates a new entry in the database <name>,<address>,<ID>\n");
+  printf("\t -a - add via CSV list of (name, address,hours)\n"); 
+  printf("\t -l - list the employees\n"); 
   return;
 }
 
@@ -21,8 +22,8 @@ int main(int argc, char *argv[]) {
   char c;
   int db_fd = 1;
   int db_status = 0;
-  struct dbheader_t *dbhdr = NULL;
-  struct employee_t *employee = NULL;
+  struct dbheader_t* dbhdr = NULL;
+  struct employee_t* employees = NULL;
   char* filepath = NULL;
   char* newEmployee = NULL; 
   bool newFile = false;
@@ -82,7 +83,17 @@ int main(int argc, char *argv[]) {
 
 
 
-   output_file(db_fd,dbhdr,&employee);
+
+   if (read_employees(db_fd, dbhdr, &employees) != STATUS_SUCCESS) {
+      printf("failed to read employees\n");
+      return -1;
+   }
+
+   if (newEmployee) {
+      add_employees(dbhdr,&employees,newEmployee);
+   }
+
+   output_file(db_fd,dbhdr,employees);
 
   return 0;
 	
